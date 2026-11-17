@@ -43,18 +43,36 @@ Below is an non-exhaustive list of the principal facts and dimensions of interes
 
 ## Data Source
 ### Format
-The data source for this project is _The Himalayan Database_, a periodically updated public archive of Himalayan climbing expeditions. It is distributed as a set of downloadable static files via [the publisher's website](https://thehimalayandb.com).
+The data source for this project is _The Himalayan Database_, a periodically updated public archive of Himalayan climbing expeditions. It is distributed as a set of downloadable static files via [the publisher's website](https://thehimalayandb.com). 
 
 The file type used is __DBF (DataBase File)__, a tabular binary database format introduced for the dBASE platform. In this project, the files are ingested programatically using Python's [__dbfread__ library](https://dbfread.readthedocs.io).
 
-Despite coming in tabular format, the raw data has several deficiencies flaws that makes it unfit to support analytics workloads:
+Despite coming in tabular format, the raw data has several deficiencies that makes it unfit to support analytics workloads:
 - non-atomic values
 - inconsistent data types
 - free-form unstructured text
 - no primary keys
 - empty columns
 
+In this project, we use an ETL workflow to clean, format, and transform the raw data after it has been ingested.
+
 ### Granularity
+_The Himalayan Database_ provides detailed information about every major climbing expedition in the Himalayas dating back to 1905.
+
+#### Peaks
+This dataset contains an entry for each Himalayan peak. It contains details such as height, location, and climbing restrictions.
+
+Most variables in this dataset are static or slow-changing dimensions.
+
+#### Expeditions
+
+#### Members
+This dataset lists details about individual members across all expeditions. Every row corresponds to a specific participant with a link back to the corresponding expedition.
+
+The different variables cover member demograhics (gender, age, occupation,...), 
+
 
 ### Freshness
+As per the source documentation, _The Himalayan Database_ is updated twice per year.
 ### Publisher
+_The Himalayan Database_ is maintained and published by the non-profit organization of the same name
