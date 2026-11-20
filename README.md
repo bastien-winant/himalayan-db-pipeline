@@ -7,7 +7,9 @@ It supports analytical work by processing and transforming a raw dataset into a 
 
 ### What are we trying to measure
 #### Scope
-The focus of the project is on __expeditions outcomes, and the factors that influence them__. To this end, the datasets are built around a specific set of entities, events, and metrics of interest. Using simple queries, users are able to uncover patterns relating specific event types (e.g. expedition success, climber injury) and related factors (e.g. climbing season, route followed, climber age).
+The focus of the project is on __expedition outcomes, and the factors that influence them__. To this end, the datasets are built around a specific set of entities, events, and metrics of interest.
+
+Using simple queries, users are able to uncover patterns relating specific event types (e.g. expedition success, climber injury) to related factors (e.g. climbing season, route followed, climber age).
 
 The following are examples of questions that the datasets are designed to answer:
 - _what is the expedition success rate on a given route?_
@@ -17,33 +19,33 @@ The following are examples of questions that the datasets are designed to answer
 - _does a given route have a significantly high fatality rate?_
 
 #### Key variables
-Below is an non-exhaustive list of the principal facts and dimensions of interest of this project.
 
 *Entities*
-- expeditions
-- peaks
-- routes
+- Expeditions
+- Peaks
+- Routes
+- Members
 
 *Events*
-- ascents
-- summits
-- accidents
+- Ascents
+- Summits
+- Accidents
 
 *KPIs*
-- success rate
-- time-to-summit
-- fatality rate
+- Success rate
+- Time-to-summit
+- Fatality rate
 
 *Confounding variables*
-- weather
-- oxygen use
-- climber experience
-- team composition
-- sponsorship
+- Weather
+- Oxygen use
+- Climber experience
+- Team composition
+- Sponsorship
 
 ## Data Source
 ### Format
-The data source for this project is _The Himalayan Database_, a periodically updated public archive of Himalayan climbing expeditions. It is distributed as a set of downloadable static files via [the publisher's website](https://thehimalayandb.com). 
+The data source for this project is _The Himalayan Database_, a periodically updated public archive of Himalayan climbing expeditions. It is distributed as a set of downloadable static files on [the publisher's website](https://thehimalayandb.com). 
 
 The file type used is __DBF (DataBase File)__, a tabular binary database format introduced for the dBASE platform. In this project, the files are ingested programatically using Python's [__dbfread__ library](https://dbfread.readthedocs.io).
 
@@ -59,18 +61,20 @@ In this project, we use an ETL workflow to clean, format, and transform the raw 
 ### Granularity
 _The Himalayan Database_ provides detailed information about every major climbing expedition in the Himalayas dating back to 1905.
 
+The raw data itself has been modeled into separate tables (each contained in its own DBF file). Three of these tables are of interest to this project: peaks, expeditions, and members. Below is a description of the contents found in each of them.
+
 #### Peaks
 This dataset contains an entry for each Himalayan peak. It contains details such as height, location, and climbing restrictions.
 
-Most variables in this dataset are static or slow-changing dimensions.
+Most variables in this dataset are static or slowly-changing dimensions.
 
 #### Expeditions
+Every entry in this table corresponds to a single expedition
 
 #### Members
-This dataset lists details about individual members across all expeditions. Every row corresponds to a specific participant with a link back to the corresponding expedition.
+This dataset lists details about individual members across for each expedition. It has the highest level of granularity across tables: every row corresponds to a specific participant.
 
-The different variables cover member demograhics (gender, age, occupation,...), 
-
+The included variables are a combination of static demographic details (gender, age, occupation,...) and expedition-related facts (summit attempts, injuries, oxygen use,...).
 
 ### Freshness
 As per the source documentation, _The Himalayan Database_ is updated twice per year.
