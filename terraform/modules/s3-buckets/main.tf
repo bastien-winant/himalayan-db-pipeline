@@ -39,6 +39,23 @@ resource "aws_s3_bucket_lifecycle_configuration" "data" {
   }
 }
 
+resource "aws_s3_bucket" "artifacts" {
+  bucket           = "${var.name_prefix}-artifacts-${var.account_id}-${var.aws_region}-an"
+  bucket_namespace = "account-regional"
+  force_destroy    = var.environment != "prod"
+  tags             = var.tags
+}
+
+resource "aws_s3_bucket_public_access_block" "artifacts" {
+  depends_on = [aws_s3_bucket.artifacts]
+
+  bucket                  = aws_s3_bucket.artifacts.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
 resource "aws_s3_bucket" "logs" {
   bucket        = "${var.name_prefix}-access-logs-${var.account_id}-${var.aws_region}-an"
   force_destroy = var.environment != "prod"
