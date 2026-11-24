@@ -1,3 +1,4 @@
+# DATA BUCKET
 resource "aws_s3_bucket" "data" {
   bucket           = "${var.name_prefix}-data-${var.account_id}-${var.aws_region}-an"
   bucket_namespace = "account-regional"
@@ -39,6 +40,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "data" {
   }
 }
 
+# ARTIFACTS BUCKET
 resource "aws_s3_bucket" "artifacts" {
   bucket           = "${var.name_prefix}-artifacts-${var.account_id}-${var.aws_region}-an"
   bucket_namespace = "account-regional"
@@ -56,6 +58,7 @@ resource "aws_s3_bucket_public_access_block" "artifacts" {
   restrict_public_buckets = true
 }
 
+# ACCESS LOGS BUCKET
 resource "aws_s3_bucket" "logs" {
   bucket        = "${var.name_prefix}-access-logs-${var.account_id}-${var.aws_region}-an"
   force_destroy = var.environment != "prod"
