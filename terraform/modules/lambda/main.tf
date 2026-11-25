@@ -10,7 +10,7 @@ resource "aws_cloudwatch_log_group" "ingest_log_group" {
   retention_in_days = var.cloudwatch_retention_days
 
   tags = merge(var.tags, {
-    Function = local.function_name
+    FunctionName = local.function_name
   })
 }
 
