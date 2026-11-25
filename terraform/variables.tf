@@ -18,7 +18,7 @@ variable "environment" {
 variable "name_prefix" {
   type        = string
   description = "Prefix to be used for resource names"
-  default = "himalayan-db"
+  default     = "himalayan-db"
 }
 
 variable "tags" {

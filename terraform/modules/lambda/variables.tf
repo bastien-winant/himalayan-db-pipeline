@@ -27,12 +27,11 @@ variable "tags" {
   type        = map(string)
 }
 
-variable "lambda_role_arn" {
-  description = "ARN for executing the Lambda ingest function"
-  type        = string
-}
-
 variable "cloudwatch_retention_days" {
   description = "Number of days to retain CloudWatch logs"
   type        = number
+}
+
+variable "data_bucket_arn" {
+  type = string
 }

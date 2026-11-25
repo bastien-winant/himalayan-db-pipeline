@@ -61,6 +61,7 @@ resource "aws_s3_bucket_public_access_block" "artifacts" {
 # ACCESS LOGS BUCKET
 resource "aws_s3_bucket" "logs" {
   bucket        = "${var.name_prefix}-access-logs-${var.account_id}-${var.aws_region}-an"
+  bucket_namespace = "account-regional"
   force_destroy = var.environment != "prod"
   tags          = var.tags
 }
