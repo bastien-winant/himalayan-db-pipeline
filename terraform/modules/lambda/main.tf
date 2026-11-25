@@ -46,7 +46,6 @@ data "aws_iam_policy_document" "lambda_policy_document" {
   # write logs to Cloudwatch
   statement {
     effect = "Allow"
-    # resources = [aws_cloudwatch_log_group.ingest_log_group.arn]
     resources = ["${aws_cloudwatch_log_group.ingest_log_group.arn}:*"]
     actions = [
       "logs:CreateLogStream",

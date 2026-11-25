@@ -35,3 +35,15 @@ variable "cloudwatch_retention_days" {
   type        = number
   default     = 14
 }
+
+variable "schedule_expression" {
+  description = "Cron expression for scheduled execution"
+  type        = string
+  default     = "cron(30 16 * * ? *)"
+}
+
+variable "schedule_timezone" {
+  description = "Timezone for scheduled execution"
+  type        = string
+  default     = "Europe/Luxembourg"
+}

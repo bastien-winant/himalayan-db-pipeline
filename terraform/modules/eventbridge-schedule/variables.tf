@@ -26,3 +26,18 @@ variable "tags" {
   description = "Common tags to be applied to all resources"
   type        = map(string)
 }
+
+variable "ingest_function_arn" {
+  description = "ARN of the Lambda ingestion function"
+  type        = string
+}
+
+variable "schedule_expression" {
+  description = "Cron expression for scheduled execution"
+  type        = string
+}
+
+variable "schedule_timezone" {
+  description = "Timezone for scheduled execution"
+  type        = string
+}
