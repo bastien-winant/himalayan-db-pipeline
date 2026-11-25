@@ -47,3 +47,42 @@ variable "schedule_timezone" {
   type        = string
   default     = "Europe/Luxembourg"
 }
+
+variable "glue_job_name" {
+  description = "Name of the AWS Glue data quality job"
+  type        = string
+  default     = "data-quality-sample-job"
+}
+
+variable "glue_job_timeout" {
+  description = "Timeout for the Glue job in minutes"
+  type        = number
+  default     = 60
+
+  validation {
+    condition     = var.glue_job_timeout >= 1 && var.glue_job_timeout <= 2880
+    error_message = "Glue job timeout must be between 1 and 2880 minutes (48 hours)."
+  }
+}
+
+variable "glue_worker_type" {
+  description = "Type of worker for Glue job (G.1X, G.2X, G.4X, G.8X, Z.2X)"
+  type        = string
+  default     = "G.1X"
+
+  validation {
+    condition     = contains(["G.1X", "G.2X", "G.4X", "G.8X", "Z.2X"], var.glue_worker_type)
+    error_message = "Worker type must be one of: G.1X, G.2X, G.4X, G.8X, Z.2X."
+  }
+}
+
+variable "glue_number_of_workers" {
+  description = "Number of workers for Glue job"
+  type        = number
+  default     = 2
+
+  validation {
+    condition     = var.glue_number_of_workers >= 2 && var.glue_number_of_workers <= 299
+    error_message = "Number of workers must be between 2 and 299."
+  }
+}

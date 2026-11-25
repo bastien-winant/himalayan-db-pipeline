@@ -36,3 +36,19 @@ module "schedule" {
   schedule_expression = var.schedule_expression
   schedule_timezone   = var.schedule_timezone
 }
+
+resource "aws_cloudwatch_metric_alarm" "data_quality_failure" {
+  alarm_name          = "${var.name_prefix}-glue-data-quality-failure"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "glue.driver.aggregate.numFailedTasks"
+  namespace           = "Glue"
+  period              = "300"
+  statistic           = "Sum"
+  threshold           = "0"
+  alarm_description   = "This metric monitors glue data quality job failures"
+
+  dimensions = {
+    JobName = var.glue_job_name
+  }
+}

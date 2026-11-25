@@ -61,24 +61,14 @@ data "aws_iam_policy_document" "lambda_policy_document" {
   }
 }
 
-resource "aws_iam_role_policy" "ingest_policy" {
+# Set lambda role inline policy
+resource "aws_iam_role_policy" "lambda_policy" {
   name_prefix = local.function_name
   role        = aws_iam_role.lambda_role.id
   policy      = data.aws_iam_policy_document.lambda_policy_document.json
 }
-# # Policy from the policy document
-# resource "aws_iam_policy" "lambda_policy" {
-#   name_prefix = local.function_name
-#   policy      = data.aws_iam_policy_document.lambda_assume_role.json
-# }
 
-# # Attach the policy to the Lambda execution role
-# resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-#   role       = aws_iam_role.lambda_role.name
-#   policy_arn = aws_iam_policy.lambda_policy.arn
-# }
-
-# Package the Layer dependencies
+# Package the dbfread dependency
 data "archive_file" "dbfread" {
   type        = "zip"
   source_dir  = "${local.lambda_dir}/layer/dbfread"
@@ -95,7 +85,7 @@ resource "aws_lambda_layer_version" "dbfread" {
   source_code_hash         = filebase64sha256(data.archive_file.dbfread.output_path)
 }
 
-# Package the Lambda function code
+# Package the ingest function code
 data "archive_file" "ingest" {
   type        = "zip"
   source_file = "${local.lambda_dir}/function/ingest/index.py"
