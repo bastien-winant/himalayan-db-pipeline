@@ -13,6 +13,10 @@ variable "environment" {
   }
 }
 
+variable "account_id" {
+  type = string
+}
+
 variable "name_prefix" {
   type        = string
   description = "Prefix to be used for resource names"
@@ -63,7 +67,22 @@ variable "glue_number_of_workers" {
   }
 }
 
+variable "data_bucket_name" {
+  description = "Name of the created S3 data bucket"
+  type        = string
+}
+
+variable "data_bucket_arn" {
+  description = "ARN of the created S3 data bucket"
+  type        = string
+}
+
 variable "artifacts_bucket_name" {
-  default = "Name of the created S3 artifacts bucket"
-  type = string
+  description = "Name of the created S3 artifacts bucket"
+  type        = string
+}
+
+variable "artifacts_bucket_arn" {
+  description = "ARN of the created S3 artifacts bucket"
+  type        = string
 }
