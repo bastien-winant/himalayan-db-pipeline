@@ -6,7 +6,7 @@ locals {
 
 # Cloudwatch group for ingest function calls
 resource "aws_cloudwatch_log_group" "ingest_log_group" {
-  name_prefix       = "/aws/lambda/${local.function_name}"
+  name              = "/aws/lambda/${local.function_name}"
   retention_in_days = var.cloudwatch_retention_days
 
   tags = merge(var.tags, {
@@ -90,7 +90,7 @@ data "archive_file" "dbfread" {
 resource "aws_lambda_layer_version" "dbfread" {
   filename                 = data.archive_file.dbfread.output_path
   layer_name               = "python314-dbfread"
-  description              = "DBFRead dependencies for Lambda functions"
+  description              = "dbfread dependency for Lambda functions"
   compatible_runtimes      = ["python3.14"]
   compatible_architectures = ["x86_64", "arm64"]
   source_code_hash         = filebase64sha256(data.archive_file.dbfread.output_path)
